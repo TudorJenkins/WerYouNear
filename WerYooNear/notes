@@ -5,15 +5,28 @@ Therefore I would like to see a simple piece of code which takes the phones GPS 
 
 
 
-1) Put a button on to start with then change it to a shake
-2) Display the answers in a tableview with 2 buttons - distance / time
-3) Make the display show images too
+
+
+1) We use the standard twitter api search for radius, and coords.
+
+2) This will not return all because there will be tweets that have place rather than coords so....
+user twitter geo api to get all the places within range. Filter out those that are large enough to include areas outside the range. Search on remaining places
 
 
 
 
+Need a timer to look periodically for updates
+Location change updates handled by the locationManager  - currently just works the once so no drain on battery
 
-TO DO
+Results duplicates are filtered out.
+Need to sort results on time / distance - plus futher filter to clean data
 
-filter final results on user id to get only unique users (rather than repeats where users tweet multiple times
-Get location and search on that too.
+Need much more comprehensive error / exception handling required 
+
+Need indicator for showing that new tweets are being delivered.
+
+Need to display time of tweet and distance. (with places, use between 0 & max distance)
+
+
+
+when adding an item, check to see if it is not already in array!
