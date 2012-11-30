@@ -1,0 +1,19 @@
+Task:
+Therefore the app part is quite simple but there is a degree of problem solving in the task. What we are looking to create a simple one screen app which alerts the user that other Twitter users are near them should they be interested.
+
+Therefore I would like to see a simple piece of code which takes the phones GPS position and current time. It should then search the Twitter Geo APIs for any tweets that match this rough location within 500m within a 30minute time span. Unfortunately twitter does not allow searching on lat/lon in all circumstances of tweets and photos and forces users to use placename ids.
+
+
+
+1) Put a button on to start with then change it to a shake
+2) Display the answers in a tableview with 2 buttons - distance / time
+3) Make the display show images too
+
+
+
+
+
+TO DO
+
+filter final results on user id to get only unique users (rather than repeats where users tweet multiple times
+Get location and search on that too.
