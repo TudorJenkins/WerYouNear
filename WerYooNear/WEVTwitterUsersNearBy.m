@@ -153,8 +153,10 @@
                               int numberOfStatus = [[timeline objectForKey:@"statuses"] count];
                               NSLog(@"number of statuses are %d",numberOfStatus);
                               
-                              NSLog(@"%@", timeline);
-                              [self updateFeed:[timeline objectForKey:@"statuses"]];
+                              // on main thread update the tableview source
+                              dispatch_async(dispatch_get_main_queue(), ^(void){
+                                  [self updateFeed:[timeline objectForKey:@"statuses"]];
+                              });
                           }
                           else
                           {
