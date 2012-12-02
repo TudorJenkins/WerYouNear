@@ -19,5 +19,6 @@
 @property(nonatomic, strong) NSMutableArray *statuses;
 @property(nonatomic) IBOutlet UILabel* rangeLabel;
 
+-(IBAction)reactToSlider:(UISlider*)sender;
 
 @end

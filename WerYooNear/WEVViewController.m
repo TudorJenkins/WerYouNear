@@ -29,6 +29,7 @@
 
 - (void)viewDidLoad
 {
+    //
     self.statuses = [[NSMutableArray alloc] initWithObjects:nil];  // create an empty array - for tableview before we get response
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
@@ -96,7 +97,7 @@
     NSDictionary *tweet = [self.statuses objectAtIndex:indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[[tweet objectForKey:@"user"] objectForKey:@"name"]];
     // just for  now, include the id so that we can be sure not two users are present in list
-    NSString *detail = [NSString stringWithFormat:@"%@",[[tweet objectForKey:@"user"] objectForKey:@"id_str"]];
+    NSString *detail = [NSString stringWithFormat:@"%@",[[tweet objectForKey:@"user"] objectForKey:@"location"]];
     cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     cell.detailTextLabel.text = detail;
     return cell;
@@ -126,18 +127,18 @@
     // try each user
     for(int i = 0; i< [users count]; i++)
     {
+        // 
+        
         existingUserReplaced = NO;
         NSString* thisUserID = [[[users objectAtIndex:i] objectForKey:@"user"] objectForKey:@"id_str"];
-        
         // work through each member of the existing array  (for that particular user)
         for(int j = 0; j <[self.statuses count]; j++)
         {
             NSString* existingUserId =  [[[self.statuses objectAtIndex:j] objectForKey:@"user"] objectForKey:@"id_str"];
-                        if([existingUserId isEqualToString:thisUserID])
+            // look to see whether user is already in the array so it can be replaced or added
+            if([existingUserId isEqualToString:thisUserID])
             {
-                NSLog(@"REPLACEMENT - %@", existingUserId);
                 [self.statuses replaceObjectAtIndex:j withObject:[users objectAtIndex:i]];
-                
                 existingUserReplaced = YES;
                 break;
             }
@@ -147,8 +148,31 @@
             [self.statuses addObject:[users objectAtIndex:i]];
         }
     }
-    
     [self.tweetersTableView reloadData];
+}
+
+
+
+#pragma mark userInteractions
+
+-(IBAction)reactToSlider:(UISlider*)sender
+{
+    // slider is not continuous - this gets called once the user stops sliding around.
+    // lets round it to nearest 1/2 km
+    float distance = sender.value * 2;
+    int discreteValue = roundl(distance); // Rounds float to an integer
+    distance = discreteValue / 2.0;
+    [sender setValue:distance]; // Sets your slider to this value
+    // display this distance
+    self.rangeLabel.text = [NSString stringWithFormat:@"%.2fkm", distance];
+    
+    
+    // clear the table view....
+    [self.statuses removeAllObjects];
+    [self.tweetersTableView reloadData];
+    
+    twitterUsersNearby.searchRangeInKm = distance;
+    [twitterUsersNearby updateLocation];
 }
 
 @end

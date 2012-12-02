@@ -88,11 +88,7 @@
 }
 -(void)handleTwitterRequestWithPlace:(NSString*)place
 {
-    NSString* searchTerm = [NSString stringWithFormat:@"place:%@", place];
-    
-//    searchTerm = [searchTerm stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    searchTerm =[searchTerm stringByAddingPercentEscapesUsingEncoding:
-                                 NSUTF8StringEncoding];
+    NSString* searchTerm = [[NSString stringWithFormat:@"place:%@", place] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:searchTerm forKey:@"q"];  
