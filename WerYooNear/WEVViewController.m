@@ -100,7 +100,7 @@
     NSString *detail = [NSString stringWithFormat:@"%@",[[tweet objectForKey:@"user"] objectForKey:@"location"]];
     // use different colour for the location information depending whether it was derived from a place or just coordinates
     if([[tweet objectForKey:@"FromPlace"] isEqualToString:@"YES"])
-        cell.detailTextLabel.textColor = [UIColor lightGrayColor];  
+        cell.detailTextLabel.textColor = [UIColor lightGrayColor];   
     else
         cell.detailTextLabel.textColor = [UIColor redColor];
     cell.detailTextLabel.text = detail;
