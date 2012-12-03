@@ -24,6 +24,7 @@
     ACAccountType *twitterAccountType_;
 }
 
+static int activeNetworkRequests = 0;
 
 @synthesize delegate=delegate_;
 @synthesize searchRangeInKm=searchRangeInKm_;
@@ -50,6 +51,20 @@
         // In real app, need to manage locationManager so that it is switched off once it returns what we need.
     }
     return self;
+}
+
+-(void) increaseNetworkRequestCount
+{
+    activeNetworkRequests++;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+}
+-(void) decreaseNetworkRequestCount
+{
+    activeNetworkRequests--;
+    if(activeNetworkRequests < 1)
+    {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    }
 }
 
 -(void)updateLocation
@@ -127,8 +142,10 @@
                  // Attach the account object to this request
                  [request setAccount:account];
                  
+                 [self increaseNetworkRequestCount];
                  [request performRequestWithHandler: ^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error)
                   {
+                      [self decreaseNetworkRequestCount];
                       if (!responseData)
                       {
                           // inspect the contents of error
@@ -207,7 +224,7 @@
                  
                 //  The endpoint that we wish to call
                 NSURL *url = [NSURL URLWithString:TWITTER_REVERSE_GEOCODE_ENDPOINT];
-                 
+                
                 //  Build the request with our parameter
                 TWRequest *request = [[TWRequest alloc] initWithURL:url
                                                          parameters:params
@@ -215,9 +232,11 @@
                  
                 // Attach the account object to this request
                 [request setAccount:account];
-                 
+                
+                [self increaseNetworkRequestCount];
                 [request performRequestWithHandler: ^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error)
                 {
+                    [self decreaseNetworkRequestCount];
                     if (!responseData)
                     {
                         // inspect the contents of error
