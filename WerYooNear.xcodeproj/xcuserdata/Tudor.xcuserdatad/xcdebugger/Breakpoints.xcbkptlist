@@ -8,12 +8,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "WerYooNear/WEVViewController.m"
-         timestampString = "376177382.886648"
+         timestampString = "376188332.756638"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "125"
-         endingLineNumber = "125"
-         landmarkName = "-twitterUsersReceived:"
+         startingLineNumber = "129"
+         endingLineNumber = "129"
+         landmarkName = "-twitterUsersReceived:obtainedFromPlace:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -21,12 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "WerYooNear/WEVViewController.m"
-         timestampString = "376177382.886648"
+         timestampString = "376188332.756638"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "128"
-         endingLineNumber = "128"
-         landmarkName = "-twitterUsersReceived:"
+         startingLineNumber = "132"
+         endingLineNumber = "132"
+         landmarkName = "-twitterUsersReceived:obtainedFromPlace:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -34,12 +34,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "WerYooNear/WEVViewController.m"
-         timestampString = "376177382.886648"
+         timestampString = "376188332.756638"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "101"
-         endingLineNumber = "101"
+         startingLineNumber = "103"
+         endingLineNumber = "103"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "WerYooNear/WEVTwitterUsersNearBy.m"
+         timestampString = "376186503.791843"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "154"
+         endingLineNumber = "154"
+         landmarkName = "-handleTwitterSearchRequestWithParams:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "WerYooNear/WEVViewController.m"
+         timestampString = "376188332.756638"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "102"
+         endingLineNumber = "102"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "WerYooNear/WEVTwitterUsersNearBy.m"
+         timestampString = "376187066.41451"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "175"
+         endingLineNumber = "175"
+         landmarkName = "-updateFeed:obtainedFromPlace:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

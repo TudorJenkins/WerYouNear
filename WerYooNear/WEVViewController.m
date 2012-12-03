@@ -98,7 +98,11 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%@",[[tweet objectForKey:@"user"] objectForKey:@"name"]];
     // just for  now, include the id so that we can be sure not two users are present in list
     NSString *detail = [NSString stringWithFormat:@"%@",[[tweet objectForKey:@"user"] objectForKey:@"location"]];
-    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    // use different colour for the location information depending whether it was derived from a place or just coordinates
+    if([[tweet objectForKey:@"FromPlace"] isEqualToString:@"YES"])
+        cell.detailTextLabel.textColor = [UIColor lightGrayColor];  
+    else
+        cell.detailTextLabel.textColor = [UIColor redColor];
     cell.detailTextLabel.text = detail;
     return cell;
     
@@ -112,7 +116,7 @@
 
 #pragma mark WEVTwitterUsersNearBy Delegate
 
--(void)twitterUsersReceived:(NSArray*)users
+-(void)twitterUsersReceived:(NSArray*)users obtainedFromPlace:(BOOL)fromPlace
 {
 // this always adds on account of the asynchronous or dribbly nature of twitter reply
     
@@ -128,7 +132,9 @@
     for(int i = 0; i< [users count]; i++)
     {
         // 
-        
+        NSMutableDictionary *theUser = [[NSMutableDictionary alloc] initWithDictionary:[users objectAtIndex:i]];
+        [theUser setObject:(fromPlace?@"YES":@"NO") forKey:@"FromPlace"];
+       
         existingUserReplaced = NO;
         NSString* thisUserID = [[[users objectAtIndex:i] objectForKey:@"user"] objectForKey:@"id_str"];
         // work through each member of the existing array  (for that particular user)
@@ -138,14 +144,15 @@
             // look to see whether user is already in the array so it can be replaced or added
             if([existingUserId isEqualToString:thisUserID])
             {
-                [self.statuses replaceObjectAtIndex:j withObject:[users objectAtIndex:i]];
+                [self.statuses replaceObjectAtIndex:j withObject:theUser];
                 existingUserReplaced = YES;
                 break;
             }
         }
         if(!existingUserReplaced)
         {
-            [self.statuses addObject:[users objectAtIndex:i]];
+            // this user has not replaced any existing user so simply insert it as a new user
+            [self.statuses addObject:theUser];
         }
     }
     [self.tweetersTableView reloadData];
@@ -157,20 +164,20 @@
 
 -(IBAction)reactToSlider:(UISlider*)sender
 {
-    // slider is not continuous - this gets called once the user stops sliding around.
-    // lets round it to nearest 1/2 km
+    // slider has been set to be not continuous - this gets called once the user stops sliding around.
+    // let's round it to nearest 1/2 km and update it to nearest 'notch'
     float distance = sender.value * 2;
     int discreteValue = roundl(distance); // Rounds float to an integer
-    distance = discreteValue / 2.0;
+    distance = discreteValue / 2.0;         // scale it back down again so that it is rounding to nearest 1/2
     [sender setValue:distance]; // Sets your slider to this value
     // display this distance
     self.rangeLabel.text = [NSString stringWithFormat:@"%.2fkm", distance];
-    
     
     // clear the table view....
     [self.statuses removeAllObjects];
     [self.tweetersTableView reloadData];
     
+    // instigate a new request to Twitter
     twitterUsersNearby.searchRangeInKm = distance;
     [twitterUsersNearby updateLocation];
 }

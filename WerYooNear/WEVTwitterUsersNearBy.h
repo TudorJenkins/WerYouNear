@@ -11,7 +11,7 @@
 
 @protocol WEVTwitterUsersNearByDelegate <NSObject>
 @required
--(void)twitterUsersReceived:(NSArray*)users;
+-(void)twitterUsersReceived:(NSArray*)users obtainedFromPlace:(BOOL)fromPlace;
 @end
 
 

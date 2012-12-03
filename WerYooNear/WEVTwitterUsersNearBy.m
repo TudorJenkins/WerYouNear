@@ -151,7 +151,8 @@
                               
                               // on main thread update the tableview source
                               dispatch_async(dispatch_get_main_queue(), ^(void){
-                                  [self updateFeed:[timeline objectForKey:@"statuses"]];
+                                  BOOL fromPlace = ![[params objectForKey:@"q"] isEqualToString:@""];  // record whether the search was based on a place
+                                  [self updateFeed:[timeline objectForKey:@"statuses"] obtainedFromPlace:fromPlace];
                               });
                           }
                           else
@@ -168,15 +169,14 @@
 
 
 
--(void)updateFeed:(id)feedData
+-(void)updateFeed:(id)feedData obtainedFromPlace:(BOOL)fromPlace
 {    
     // handle delegate
-    if(self.delegate && [self.delegate respondsToSelector:@selector(twitterUsersReceived:)])
+    if(self.delegate && [self.delegate respondsToSelector:@selector(twitterUsersReceived:obtainedFromPlace:)])
     {
-        [self.delegate twitterUsersReceived:(NSArray *)feedData];
+        [self.delegate twitterUsersReceived:(NSArray *)feedData obtainedFromPlace:fromPlace];
     }
 }
-
 
 
 -(void)handleTwitterReverseGeoWithLat:(float)latitude withLong:(float)longitude
@@ -249,7 +249,7 @@
     }];
 }
 
-
+// work through each of the places returned by the TwitterRevereseGeoRequest and for each, check suitablity wrt range. If okay then do twitter search for place
 -(void)processPlaces:(id)feedData withLatitude:(float)myLatitude withLongitude:(float)myLongitude
 {
     NSMutableArray* places = [[NSMutableArray alloc] initWithArray:(NSArray*)feedData];
